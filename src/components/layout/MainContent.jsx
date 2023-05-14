@@ -1,6 +1,8 @@
 import React from "react"
 import axios from 'axios';
 import Movies from "../../fragments/Movies";
+import Search from "../../fragments/Search";
+import Preloader from "../../fragments/Preloader";
 
 
 class MainContent extends React.Component {
@@ -31,14 +33,41 @@ class MainContent extends React.Component {
                 .finally(function () {
                 });
         
+    }
+
+    searchMovies= (str) =>{
+        // fetch(`http://www.omdbapi.com/?apikey=9e289127&s=${strValue}`)
+        //     .then(response => response.json())
+        // .then(data=>this.setState({movies:data.Search}))
+
+        const OMDB = 'http://www.omdbapi.com/';
+        const APIKEY = '9e289127';
+        const self = this;
+            axios.get(OMDB, {
+                params: {
+                    apikey: APIKEY,
+                    s:`${str}`,
+                }
+            })
+                .then( (response)=> {
+                    console.log(response.data)
+                    self.setState({movies:response.data.Search})
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+                .finally(function () {
+                });
+        
 }
     
     render() {
         const { movies } = this.state;
 
         return (<main className="content container">
+            <Search searchMovies={this.searchMovies} />
             {
-                movies.length ? (<Movies movies={movies} />) : <h3> Loading...</h3>
+                movies.length ? (<Movies movies={movies} />) : <Preloader />
 
             }
     </main >)
@@ -49,7 +78,3 @@ class MainContent extends React.Component {
 
 export default MainContent
 
-
-// axios.get("/yourURL").then(function(response) {
-//     this.setState({ events: response.data });
-//   }.bind(this));
