@@ -1,29 +1,21 @@
-import axios, {isCancel, AxiosError} from 'axios';
-
+import axios from 'axios';
 const OMDB = 'http://www.omdbapi.com/';
 const APIKEY = '9e289127';
-let data=[];
-let film;
-function req() {
+
+const self = this;
     axios.get(OMDB, {
         params: {
             apikey: APIKEY,
-            s: 'batman',
+            s: 'matrix',
         }
     })
-        .then(function (response) {
-            console.log(response);
-            data = response.data.Search;
-            for (let i = 0; i < data.length; i++) {
-                 film = data[i];
-                console.log(film);
-            }
+        .then( (response)=> {
+            console.log(response.data)
+            self.setState({movies:response.data.Search})
         })
         .catch(function (error) {
             console.log(error)
         })
         .finally(function () {
         });
-}
-
-export default req
+// export default req
