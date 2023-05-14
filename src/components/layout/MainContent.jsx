@@ -36,10 +36,6 @@ class MainContent extends React.Component {
     }
 
     searchMovies= (str) =>{
-        // fetch(`http://www.omdbapi.com/?apikey=9e289127&s=${strValue}`)
-        //     .then(response => response.json())
-        // .then(data=>this.setState({movies:data.Search}))
-
         const OMDB = 'http://www.omdbapi.com/';
         const APIKEY = '9e289127';
         const self = this;
