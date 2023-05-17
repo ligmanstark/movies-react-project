@@ -17,7 +17,7 @@ class MainContent extends React.Component {
 	}
 
 	componentDidMount() {
-		const OMDB = 'http://www.omdbapi.com/';
+		const OMDB = 'https://www.omdbapi.com/';
 		const APIKEY = API_KEY;
 
 		const self = this;
@@ -35,13 +35,14 @@ class MainContent extends React.Component {
 			})
 			.catch(function (error) {
 				console.log(error);
+				self.setState({ loading: false });
 			})
 			.finally(function () {});
 	}
 
 	searchMovies(str = 'Marvel', type = '') {
 		this.setState({ loading: true });
-		const OMDB = 'http://www.omdbapi.com/';
+		const OMDB = 'https://www.omdbapi.com/';
 		const APIKEY = API_KEY;
 		const self = this;
 		axios
