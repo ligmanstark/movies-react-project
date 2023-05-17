@@ -4,7 +4,7 @@ import Movies from '../../fragments/Movies';
 import Search from '../../fragments/Search';
 import Preloader from '../../fragments/Preloader';
 
-const API_KEY=process.env.REACT_APP_API_KEY
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 class MainContent extends React.Component {
 	constructor() {

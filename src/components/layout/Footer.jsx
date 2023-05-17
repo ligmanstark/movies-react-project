@@ -6,7 +6,7 @@ function Footer() {
 					© {new Date().getFullYear()} Copyright Text
 					<a
 						className='grey-text text-lighten-4 right'
-						href='#!'
+						href='https://github.com/ligmanstark/movies-react-project'
 					>
 						Github Repository
 					</a>
