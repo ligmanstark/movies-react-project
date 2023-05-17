@@ -3,7 +3,7 @@ function Header() {
 		<nav className='light-blue darken-1'>
 			<div className='nav-wrapper'>
 				<a
-					href='!#'
+					href='https://ligmanstark.github.io/movies-react-project/'
 					className='brand-logo'
 				>
 					Movies
@@ -14,7 +14,7 @@ function Header() {
 					className='right hide-on-med-and-down'
 				>
 					<li>
-						<a href='!#'>Gallery</a>
+						<a href='https://ligmanstark.github.io/movies-react-project/'>Gallery</a>
 					</li>
 				</ul>
 			</div>
