@@ -29,8 +29,8 @@ nav {
 }
 
 .filter {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	gap: 18rem;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: flex-start;
 }
