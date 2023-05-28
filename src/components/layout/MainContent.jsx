@@ -15,7 +15,7 @@ class MainContent extends React.Component {
 			movies: [],
 			loading: true,
 			resaults: null,
-			pages: null,
+			// pages: null,
 		};
 		this.searchMovies = this.searchMovies.bind(this);
 	}
@@ -40,9 +40,9 @@ class MainContent extends React.Component {
 					movies: response.data.Search,
 					loading: false,
 					resaults: response.data.totalResults,
-					pages: [
-						...Array(Math.ceil(response.data.totalResults / 10)).keys(),
-					].map((i) => i + 1),
+					// pages: [
+					// 	...Array(Math.ceil(response.data.totalResults / 10)).keys(),
+					// ].map((i) => i + 1),
 				});
 			})
 			.catch(function (error) {
@@ -70,9 +70,10 @@ class MainContent extends React.Component {
 				self.setState({
 					movies: response.data.Search,
 					loading: false,
-					resaults: response.data.totalResults,pages: [
-						...Array(Math.ceil(response.data.totalResults / 10)).keys(),
-					].map((i) => i + 1),
+					resaults: response.data.totalResults,
+					// pages: [
+					// 	...Array(Math.ceil(response.data.totalResults / 10)).keys(),
+					// ].map((i) => i + 1),
 				});
 			})
 			.catch(function (error) {
@@ -93,7 +94,7 @@ class MainContent extends React.Component {
 				/>
 
 				{loading ? <Preloader /> : <Movies movies={movies} />}
-				<Pages pages={pages}/>
+				{/* <Pages pages={pages}/> */}
 
 			</main>
 		);
