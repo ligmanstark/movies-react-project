@@ -52,6 +52,8 @@ class MainContent extends React.Component {
 			.finally(function () {});
 	}
 
+	
+
 	searchMovies(str = 'Marvel', type = '') {
 		this.setState({ loading: true });
 		const OMDB = 'https://www.omdbapi.com/';
