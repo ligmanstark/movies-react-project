@@ -1,31 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Movies from '../../fragments/Movies';
 import Search from '../../fragments/Search';
 import Preloader from '../../fragments/Preloader';
 import TotalResault from '../../fragments/TotalResault';
-import Pages from '../../fragments/Pages';
+// import Pages from '../../fragments/Pages';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
-class MainContent extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			movies: [],
-			loading: true,
-			resaults: null,
-			// pages: null,
-		};
-		this.searchMovies = this.searchMovies.bind(this);
-	}
+const MainContent = () => {
+	const [movies, setMovies] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [resaults, setResaults] = useState(null);
+	// const [pages, setPages] = useState([]);
 
-	
-	componentDidMount() {
+	useEffect(() => {
 		const OMDB = 'https://www.omdbapi.com/';
 		const APIKEY = API_KEY;
 
-		const self = this;
 		axios
 			.get(OMDB, {
 				params: {
@@ -35,30 +27,24 @@ class MainContent extends React.Component {
 				},
 			})
 			.then((response) => {
-				// console.log(response.data);
-				self.setState({
-					movies: response.data.Search,
-					loading: false,
-					resaults: response.data.totalResults,
-					// pages: [
-					// 	...Array(Math.ceil(response.data.totalResults / 10)).keys(),
-					// ].map((i) => i + 1),
-				});
+				setMovies(response.data.Search);
+				setLoading(false);
+				setResaults(response.data.totalResults);
+				// setPages([...Array(Math.ceil(response.data.totalResults / 10)).keys(),].map((i) => i + 1))
 			})
 			.catch(function (error) {
 				console.log(error);
-				self.setState({ loading: false });
+				setLoading(false);
 			})
 			.finally(function () {});
-	}
 
-	
+		return () => {};
+	}, []);
 
-	searchMovies(str = 'Marvel', type = '') {
-		this.setState({ loading: true });
+	const searchMovies = (str = 'Marvel', type = '') => {
+		setLoading(true);
 		const OMDB = 'https://www.omdbapi.com/';
 		const APIKEY = API_KEY;
-		const self = this;
 		axios
 			.get(OMDB, {
 				params: {
@@ -69,38 +55,30 @@ class MainContent extends React.Component {
 			})
 			.then((response) => {
 				console.log(response.data);
-				self.setState({
-					movies: response.data.Search,
-					loading: false,
-					resaults: response.data.totalResults,
-					// pages: [
-					// 	...Array(Math.ceil(response.data.totalResults / 10)).keys(),
-					// ].map((i) => i + 1),
-				});
+
+				setMovies(response.data.Search);
+				setLoading(false);
+				setResaults(response.data.totalResults);
+				// setPages([...Array(Math.ceil(response.data.totalResults / 10)).keys(),].map((i) => i + 1))
 			})
 			.catch(function (error) {
 				console.log(error);
 			})
 			.finally(function () {});
-	}
+	};
 
-	render() {
-		const { movies, loading, resaults, pages } = this.state;
+	return (
+		<main className='content container'>
+			<Search searchMovies={searchMovies} />
+			<TotalResault
+				resaults={resaults}
+				// pages={pages}
+			/>
 
-		return (
-			<main className='content container'>
-				<Search searchMovies={this.searchMovies} />
-				<TotalResault
-					resaults={resaults}
-					// pages={pages}
-				/>
-
-				{loading ? <Preloader /> : <Movies movies={movies} />}
-				{/* <Pages pages={pages}/> */}
-
-			</main>
-		);
-	}
-}
+			{loading ? <Preloader /> : <Movies movies={movies} />}
+			{/* <Pages pages={pages}/> */}
+		</main>
+	);
+};
 
 export default MainContent;
