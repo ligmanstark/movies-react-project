@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Movies from '../../fragments/Movies';
-import Search from '../../fragments/Search';
+import { Search, setValueSearch, setValueType } from '../../fragments/Search';
 import Preloader from '../../fragments/Preloader';
 import TotalResault from '../../fragments/TotalResault';
-// import Pages from '../../fragments/Pages';
+import Pages from '../../fragments/Pages';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -12,7 +12,7 @@ const MainContent = () => {
 	const [movies, setMovies] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [resaults, setResaults] = useState(null);
-	// const [pages, setPages] = useState([]);
+	const [pages, setPages] = useState([]);
 
 	useEffect(() => {
 		const OMDB = 'https://www.omdbapi.com/';
@@ -24,13 +24,21 @@ const MainContent = () => {
 					apikey: APIKEY,
 					s: 'Marvel',
 					type: '',
+					page: 1,
 				},
 			})
 			.then((response) => {
 				setMovies(response.data.Search);
 				setLoading(false);
 				setResaults(response.data.totalResults);
-				// setPages([...Array(Math.ceil(response.data.totalResults / 10)).keys(),].map((i) => i + 1))
+				setPages(
+					[...Array(Math.ceil(response.data.totalResults / 10)).keys()].map(
+						(i) => i + 1
+					)
+					// [...Array(Math.ceil(response.data.totalResults / 10)).keys()].map(
+					// 	(i) => i + 1
+					// )
+				);
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -41,7 +49,7 @@ const MainContent = () => {
 		return () => {};
 	}, []);
 
-	const searchMovies = (str = 'Marvel', type = '') => {
+	const searchMovies = (str = 'Marvel', type = '', page) => {
 		setLoading(true);
 		const OMDB = 'https://www.omdbapi.com/';
 		const APIKEY = API_KEY;
@@ -51,6 +59,8 @@ const MainContent = () => {
 					apikey: APIKEY,
 					s: `${str !== '' ? str : 'Marvel'}`,
 					type: `${type !== '' ? type : ''}`,
+					// page: `${(page = pages.slice((j) => j + 1))}`,
+					page: `${page !== 1 ? page : 1}`,
 				},
 			})
 			.then((response) => {
@@ -59,7 +69,13 @@ const MainContent = () => {
 				setMovies(response.data.Search);
 				setLoading(false);
 				setResaults(response.data.totalResults);
-				// setPages([...Array(Math.ceil(response.data.totalResults / 10)).keys(),].map((i) => i + 1))
+				setPages(
+					[...Array(Math.ceil(response.data.totalResults / 10)).keys()].map(
+						(i) => i + 1
+					)
+				);
+
+				console.log(pages);
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -70,13 +86,15 @@ const MainContent = () => {
 	return (
 		<main className='content container'>
 			<Search searchMovies={searchMovies} />
-			<TotalResault
-				resaults={resaults}
-				// pages={pages}
-			/>
+			<TotalResault resaults={resaults} />
 
 			{loading ? <Preloader /> : <Movies movies={movies} />}
-			{/* <Pages pages={pages}/> */}
+			<Pages
+				pages={pages}
+				searchMovies={searchMovies}
+				setValueSearch={setValueSearch}
+				setValueType={setValueType}
+			/>
 		</main>
 	);
 };
