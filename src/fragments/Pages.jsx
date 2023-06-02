@@ -8,11 +8,11 @@ function Pages(props) {
 		setValueSearch = Function.prototype,
 		setValueType = Function.prototype,
 	} = props;
-	console.log(localStorage);
+
 
 	let [search, setSearch] = useState(setValueSearch());
 	let [type, setType] = useState(setValueType());
-	console.log(search);
+
 
 	search = localStorage.valueSearch;
 	type = localStorage.valueType;
