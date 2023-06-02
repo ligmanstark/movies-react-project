@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
-const Search = (props) => {
+export function setValueSearch() {
+	const userValueSearch = localStorage.getItem('valueSearch');
+	return userValueSearch ? userValueSearch : '';
+}
+
+export function setValueType() {
+	const userValueType = localStorage.getItem('valueType');
+	return userValueType ? userValueType : '';
+}
+
+export const Search = (props) => {
 	const { searchMovies = Function.prototype } = props;
 
-	const [search, setSearch] = useState('');
-	const [type, setType] = useState('');
+	 const [search, setSearch] = useState(setValueSearch());
+	const [type, setType] = useState(setValueType());
+
 
 	const handleKey = (event) => {
 		if (event.key === 'Enter') {
@@ -16,6 +27,17 @@ const Search = (props) => {
 		setType(event.target.dataset.type);
 		searchMovies(search, event.target.dataset.type);
 	};
+
+	useEffect(() => {
+		localStorage.setItem('valueSearch',search)
+		return () => {
+		};
+	}, [search]);
+
+	useEffect(() => {
+		localStorage.setItem('valueType',type)
+		return () => {};
+	}, [type]);
 
 	return (
 		<div className='row'>
@@ -82,4 +104,3 @@ const Search = (props) => {
 	);
 };
 
-export default Search;
