@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import React from 'react';
 import Page from './Page';
 
@@ -9,23 +9,11 @@ function Pages(props) {
 		setValueType = Function.prototype,
 	} = props;
 
-
 	let [search, setSearch] = useState(setValueSearch());
 	let [type, setType] = useState(setValueType());
 
-
 	search = localStorage.valueSearch;
 	type = localStorage.valueType;
-
-	// useEffect(() => {
-	// 	localStorage.setItem('valueSearch', search);
-	// 	return () => {};
-	// });
-
-	// useEffect(() => {
-	// 	localStorage.setItem('valueType', type);
-	// 	return () => {};
-	// }, [type]);
 
 	return (
 		<div className='pages'>
