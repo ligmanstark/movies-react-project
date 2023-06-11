@@ -35,9 +35,6 @@ const MainContent = () => {
 					[...Array(Math.ceil(response.data.totalResults / 10)).keys()].map(
 						(i) => i + 1
 					)
-					// [...Array(Math.ceil(response.data.totalResults / 10)).keys()].map(
-					// 	(i) => i + 1
-					// )
 				);
 			})
 			.catch(function (error) {
@@ -59,7 +56,6 @@ const MainContent = () => {
 					apikey: APIKEY,
 					s: `${str !== '' ? str : 'Marvel'}`,
 					type: `${type !== '' ? type : ''}`,
-					// page: `${(page = pages.slice((j) => j + 1))}`,
 					page: `${page !== 1 ? page : 1}`,
 				},
 			})
