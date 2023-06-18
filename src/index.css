@@ -43,3 +43,21 @@ nav {
 	justify-content: center;
 	gap: 4px;
 }
+
+.film-card {
+
+	display: flex;
+	gap: 116px;
+}
+
+.btn-back{
+	border-radius: 12px;
+}
+
+.poster {
+	margin-top: 46px;
+}
+
+.about-film {
+	font-size: 18px;
+}

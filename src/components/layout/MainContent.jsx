@@ -5,6 +5,7 @@ import { Search, setValueSearch, setValueType } from '../../fragments/Search';
 import Preloader from '../../fragments/Preloader';
 import TotalResault from '../../fragments/TotalResault';
 import Pages from '../../fragments/Pages';
+import FilmRender from '../../fragments/FilmPage';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -13,6 +14,8 @@ const MainContent = () => {
 	const [loading, setLoading] = useState(true);
 	const [resaults, setResaults] = useState(null);
 	const [pages, setPages] = useState([]);
+	const [film, setFilm] = useState([]);
+	const [IsLoadingFilm, setFilmLoad] = useState(false);
 
 	useEffect(() => {
 		const OMDB = 'https://www.omdbapi.com/';
@@ -32,10 +35,11 @@ const MainContent = () => {
 				setLoading(false);
 				setResaults(response.data.totalResults);
 				setPages(
-					[...Array(Math.ceil(response.data.totalResults / 10)).keys()].map(
-						(i) => i + 1
-					)
+					[
+						...Array(Math.ceil(response.data.totalResults / 10)).keys(),
+					].map((i) => i + 1)
 				);
+				// console.log(response.data.Search);
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -66,9 +70,9 @@ const MainContent = () => {
 				setLoading(false);
 				setResaults(response.data.totalResults);
 				setPages(
-					[...Array(Math.ceil(response.data.totalResults / 10)).keys()].map(
-						(i) => i + 1
-					)
+					[
+						...Array(Math.ceil(response.data.totalResults / 10)).keys(),
+					].map((i) => i + 1)
 				);
 
 				console.log(pages);
@@ -79,18 +83,57 @@ const MainContent = () => {
 			.finally(function () {});
 	};
 
-	return (
-		<main className='content container'>
-			<Search searchMovies={searchMovies} />
-			<TotalResault resaults={resaults} />
+	const searchFilmPage = (imdbID) => {
+		setLoading(true);
+		const OMDB = 'https://www.omdbapi.com/';
+		const APIKEY = API_KEY;
+		axios
+			.get(OMDB, {
+				params: {
+					apikey: APIKEY,
+					i: imdbID,
+				},
+			})
+			.then((response) => {
+				setFilm(response.data);
+				setLoading(false);
+				setFilmLoad(true);
+				console.log(response.data);
+			})
+			.catch(function (error) {
+				console.log(error);
+			})
+			.finally(function () {});
+	};
 
-			{loading ? <Preloader /> : <Movies movies={movies} />}
-			<Pages
-				pages={pages}
-				searchMovies={searchMovies}
-				setValueSearch={setValueSearch}
-				setValueType={setValueType}
-			/>
+	const buttonBack = () => {
+		setFilmLoad(false);
+	};
+
+	return (
+		<main className="content container">
+			{!IsLoadingFilm ? <Search searchMovies={searchMovies} /> : ''}
+
+			{!IsLoadingFilm ? <TotalResault resaults={resaults} /> : ''}
+
+			{loading ? (
+				<Preloader />
+			) : IsLoadingFilm ? (
+				<FilmRender film={film} buttonBack={buttonBack} />
+			) : (
+				<Movies movies={movies} searchFilmPage={searchFilmPage} />
+			)}
+
+			{!IsLoadingFilm ? (
+				<Pages
+					pages={pages}
+					searchMovies={searchMovies}
+					setValueSearch={setValueSearch}
+					setValueType={setValueType}
+				/>
+			) : (
+				''
+			)}
 		</main>
 	);
 };

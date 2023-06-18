@@ -9,6 +9,7 @@ function Movies(props) {
 					<Movie
 						key={movie.imdbID}
 						{...movie}
+						searchFilmPage={props.searchFilmPage}
 					/>
 				))
 			) : (
