@@ -3,34 +3,24 @@ import React from 'react';
 const FilmRender = (props) => {
 	const {
 		Actors,
-		Awards,
-		BoxOffice,
 		Country,
-		DVD,
-		Director,
 		Genre,
 		Language,
-		Metascore,
 		Plot,
 		Poster,
-		Production,
-		Rated,
 		Released,
-		Runtime,
 		Title,
 		Type,
-		Writer,
-		Year,
 		imdbRating,
 		imdbVotes,
 		imdbID,
-    } = props.film;
-    const {
-		buttonBack = Function.prototype} = props;
+	} = props.film;
+	const { buttonBack = Function.prototype} =
+		props;
 
 	let ratingInternetMovieDatabase = '';
 	let ratingRottenTomatoes = '';
-    let ratingMetacritic = '';
+	let ratingMetacritic = '';
 
 	if (props.film.Ratings[2]) {
 		ratingInternetMovieDatabase = props.film.Ratings[0].Value;
@@ -44,27 +34,40 @@ const FilmRender = (props) => {
 	} else {
 		return false;
 	}
+	console.log(props.film);
 	console.log(props);
-	// console.log(ratingRottenTomatoes);
-
 	return (
-		<div className="film-page" key={imdbID}>
-			<div className="film-card">
+		<div
+			className='film-page'
+			key={imdbID}
+		>
+			<div className='film-card'>
 				{Poster === 'N/A' ? (
-					<h5>Too little information about the movie...</h5>
+					<>
+						<div>
+							<button onClick={buttonBack}>
+								<i className='fa-solid fa-angles-left'> Back</i>
+							</button>
+						</div>
+						<h4>Too little information about film...</h4>
+					</>
 				) : (
 					<>
 						<div>
 							<button onClick={buttonBack}>
-								<i className="fa-solid fa-angles-left"> Back</i>
+								<i className='fa-solid fa-angles-left'> Back</i>
 							</button>
 						</div>
 
-						<div className="poster">
-							<img className="activator" src={Poster} alt="" />
+						<div className='poster'>
+							<img
+								className=''
+								src={Poster}
+								alt=''
+							/>
 						</div>
 
-						<div className="about-film">
+						<div className='about-film'>
 							<h3>{Title}</h3>
 							<p>
 								<b>Intro: </b>
@@ -94,8 +97,8 @@ const FilmRender = (props) => {
 								<b>Language: </b>
 								{Language}
 							</p>
-							<div className="ratings-film">
-								<div className="imdb-rating">
+							<div className='ratings-film'>
+								<div className='imdb-rating'>
 									<p>
 										<b>Imdb Rating: </b>
 										{imdbRating ? imdbRating : 'N/A'}
@@ -105,7 +108,7 @@ const FilmRender = (props) => {
 										{imdbVotes ? imdbVotes : 'N/A'}
 									</p>
 								</div>
-								<div className="rating-internet-movie-database">
+								<div className='rating-internet-movie-database'>
 									<p>
 										<b>Rating Internet Movie DataBase: </b>
 
@@ -114,20 +117,16 @@ const FilmRender = (props) => {
 											: 'N/A'}
 									</p>
 								</div>
-								<div className="rating-rotten-tomatoes">
+								<div className='rating-rotten-tomatoes'>
 									<p>
 										<b>Rating RottenTomatoes: </b>
-										{ratingRottenTomatoes
-											? ratingRottenTomatoes
-											: 'N/A'}
+										{ratingRottenTomatoes ? ratingRottenTomatoes : 'N/A'}
 									</p>
 								</div>
-								<div className="rating-metacritic">
+								<div className='rating-metacritic'>
 									<p>
 										<b>Rating Metacritic: </b>
-										{ratingMetacritic === 'N/A'
-											? ratingMetacritic
-											: 'N/A'}
+										{ratingMetacritic ? ratingMetacritic : 'N/A'}
 									</p>
 								</div>
 							</div>

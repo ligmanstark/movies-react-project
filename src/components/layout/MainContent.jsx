@@ -35,11 +35,10 @@ const MainContent = () => {
 				setLoading(false);
 				setResaults(response.data.totalResults);
 				setPages(
-					[
-						...Array(Math.ceil(response.data.totalResults / 10)).keys(),
-					].map((i) => i + 1)
+					[...Array(Math.ceil(response.data.totalResults / 10)).keys()].map(
+						(i) => i + 1
+					)
 				);
-				// console.log(response.data.Search);
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -70,9 +69,9 @@ const MainContent = () => {
 				setLoading(false);
 				setResaults(response.data.totalResults);
 				setPages(
-					[
-						...Array(Math.ceil(response.data.totalResults / 10)).keys(),
-					].map((i) => i + 1)
+					[...Array(Math.ceil(response.data.totalResults / 10)).keys()].map(
+						(i) => i + 1
+					)
 				);
 
 				console.log(pages);
@@ -98,7 +97,8 @@ const MainContent = () => {
 				setFilm(response.data);
 				setLoading(false);
 				setFilmLoad(true);
-				console.log(response.data);
+				console.log('film', film);
+				console.log('response', response.data)
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -111,7 +111,7 @@ const MainContent = () => {
 	};
 
 	return (
-		<main className="content container">
+		<main className='content container'>
 			{!IsLoadingFilm ? <Search searchMovies={searchMovies} /> : ''}
 
 			{!IsLoadingFilm ? <TotalResault resaults={resaults} /> : ''}
@@ -119,9 +119,16 @@ const MainContent = () => {
 			{loading ? (
 				<Preloader />
 			) : IsLoadingFilm ? (
-				<FilmRender film={film} buttonBack={buttonBack} />
+				<FilmRender
+					film={film}
+					buttonBack={buttonBack}
+					setFilmLoad={setFilmLoad}
+				/>
 			) : (
-				<Movies movies={movies} searchFilmPage={searchFilmPage} />
+				<Movies
+					movies={movies}
+					searchFilmPage={searchFilmPage}
+				/>
 			)}
 
 			{!IsLoadingFilm ? (
